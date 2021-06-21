@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Company } from '../company'
 import { CompanyService } from '../company-service';
@@ -9,7 +10,7 @@ import { CompanyService } from '../company-service';
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent implements OnInit {
-  companies: Company[] = [];
+  companies$: Observable<Company[]> | undefined;
   // companyService: CompanyService;
 
   constructor(private companyService: CompanyService) {
@@ -22,17 +23,18 @@ export class CompanyListComponent implements OnInit {
 
   getCompanies() {
     // this.companies = this.companyService.getCompanies();
-    this.companyService.getCompanies().pipe(tap(x => console.log('TAP - Component', x)))
-      .subscribe(companies => {
-        console.log('next called')
-        this.companies = companies;
-      },
-        error => {
-          console.log('error called', error)
-        },
-        () => {
-          console.log('complete called');
-        });
+    // this.companyService.getCompanies().pipe(tap(x => console.log('TAP - Component', x)))
+    //   .subscribe(companies => {
+    //     console.log('next called')
+    //     this.companies = companies;
+    //   },
+    //     error => {
+    //       console.log('error called', error)
+    //     },
+    //     () => {
+    //       console.log('complete called');
+    //     });
+    this.companies$ = this.companyService.getCompanies();
   }
 
 }
