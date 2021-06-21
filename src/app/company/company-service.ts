@@ -20,17 +20,23 @@ export class CompanyService {
     // ]
 
     // return this.httpClient.get<Company[]>(`${this.API_BASE}/company`);
+
     return this.httpClient.get<Company[]>(`${this.API_BASE}/company`)
       // .pipe(catchError(this.errorHandler));
       .pipe(
         tap(x => console.log(x)),
-        catchError(error => this.errorHandler(error)),
+        catchError(error => this.errorHandler<Company[]>(error)),
         finalize(() => console.log('Finalize'))
       );
   }
 
-  private errorHandler(error: Error): Observable<Company[]> {
+  private errorHandler<T>(error: Error): Observable<T> {
     console.log('Service error', error);
-    return new Observable<Company[]>();
+    return new Observable<T>();
+  }
+
+  public delteCompany(companyiD: number): Observable<Company> {
+    return this.httpClient.delete<Company>(`${this.API_BASE}/company/${companyiD}`)
+      .pipe(catchError(error => this.errorHandler<Company>(error)));
   }
 }

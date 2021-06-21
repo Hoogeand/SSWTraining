@@ -37,4 +37,9 @@ export class CompanyListComponent implements OnInit {
     this.companies$ = this.companyService.getCompanies();
   }
 
+  deleteCompany(companyiD: number) {
+    this.companyService.delteCompany(companyiD)
+      .subscribe(() => this.getCompanies());
+  }
+
 }
