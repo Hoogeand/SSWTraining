@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { Company } from '../company'
 import { CompanyService } from '../company-service';
 
@@ -15,15 +16,23 @@ export class CompanyListComponent implements OnInit {
     // this.companyService = companyService;
   }
 
-
-
   ngOnInit(): void {
     this.getCompanies();
   }
 
   getCompanies() {
-
-    this.companies = this.companyService.getCompanies();
+    // this.companies = this.companyService.getCompanies();
+    this.companyService.getCompanies().pipe(tap(x => console.log('TAP - Component', x)))
+      .subscribe(companies => {
+        console.log('next called')
+        this.companies = companies;
+      },
+        error => {
+          console.log('error called', error)
+        },
+        () => {
+          console.log('complete called');
+        });
   }
 
 }
