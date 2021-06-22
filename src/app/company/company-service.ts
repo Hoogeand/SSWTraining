@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Company } from './company';
 import { catchError } from 'rxjs/operators';
 import { tap, finalize } from 'rxjs/operators';
@@ -12,7 +12,10 @@ export class CompanyService {
   API_BASE = 'https://firebootcamp-crm-api.azurewebsites.net/api';
 
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.loadCompanies();
+  }
+  companies$: BehaviorSubject<Company[]> = new BehaviorSubject<Company[]>([]);
 
   public getCompanies(): Observable<Company[]> {
     // return [
@@ -23,13 +26,16 @@ export class CompanyService {
 
     // return this.httpClient.get<Company[]>(`${this.API_BASE}/company`);
 
-    return this.httpClient.get<Company[]>(`${this.API_BASE}/company`)
-      // .pipe(catchError(this.errorHandler));
-      .pipe(
-        tap(x => console.log(x)),
-        catchError(error => this.errorHandler<Company[]>(error)),
-        finalize(() => console.log('Finalize'))
-      );
+
+    // return this.httpClient.get<Company[]>(`${this.API_BASE}/company`)
+    //   // .pipe(catchError(this.errorHandler));
+    //   .pipe(
+    //     tap(x => console.log(x)),
+    //     catchError(error => this.errorHandler<Company[]>(error)),
+    //     finalize(() => console.log('Finalize'))
+    //   );
+
+    return this.companies$;
   }
 
   private errorHandler<T>(error: Error): Observable<T> {
@@ -53,6 +59,15 @@ export class CompanyService {
       }
     ).pipe(catchError(error => this.errorHandler<Company>(error)));
 
+  }
+
+  private loadCompanies(): void {
+    this.httpClient.get<Company[]>(`${this.API_BASE}/company`)
+      .pipe(
+        tap(x => console.log(x)),
+        catchError(error => this.errorHandler<Company[]>(error)),
+        finalize(() => console.log('Finalize'))
+      ).subscribe(companies => this.companies$.next(companies));
   }
 
   updateCompany(company: Company) {
