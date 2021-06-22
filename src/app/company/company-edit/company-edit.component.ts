@@ -60,7 +60,6 @@ export class CompanyEditComponent implements OnInit {
     if (this.isNewCompany) {
       this.companyService
         .addCompany(value)
-        .subscribe(() => this.router.navigate(['company/list']));
     } else {
       // const coompany = {
       //   id: this.companyID,
@@ -75,8 +74,8 @@ export class CompanyEditComponent implements OnInit {
       } as Company;
 
 
-      this.companyService.updateCompany(coompany)
-        .subscribe(() => this.router.navigate(['company/list']));
+      this.companyService.updateCompany(coompany);
     }
+    this.router.navigate(['company/list']);
   }
 }
