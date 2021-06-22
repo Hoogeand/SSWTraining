@@ -153,3 +153,42 @@ Use ... syntxx
         ...value
       } as Company;
 
+Float over an observable and look at observers to see if obserables are not being unssubscriped
+
+---
+Stores -- Tools - Redux tools to  see chages in store.
+-- Subscripte with actions
+-- update whti  actions which updates store
+--- reducers update the actual objects in the sotres
+
+Tools Search SSW rules - https://www.ssw.com.au/rules/
+
+---
+Lazy loading
+Check network tracking 
+
+Builds
+------
+CHange sourcemaps for different environments in angular.json 
+-- Look for source maps in toolbar, 
+--- allow for optomised code to display original code (same as pdb in C#)
+Tools -- RayGun -- User tracking for producation compiled code.
+
+Can replace files during build
+ng s --configuration prodcution
+
+possible to call api to get all the URLs
+not ideal to include urls in code and commit
+
+IIS
+---
+Have to enable url rewrite, copy dist to server
+
+Tool - Import Cost extension - show how big imports are
+
+https://stackoverflow.com/questions/26600845/how-to-disable-caching-of-single-page-application-html-file-served-through-iis
+
+Testing
+-------
+Jasmine it the tool to describe the tests
+Karma is the tool which runs the tests (similar to ng serve)

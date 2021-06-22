@@ -4,12 +4,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Company } from './company';
 import { catchError } from 'rxjs/operators';
 import { tap, finalize } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
-  API_BASE = 'https://firebootcamp-crm-api.azurewebsites.net/api';
+  //API_BASE = 'https://firebootcamp-crm-api.azurewebsites.net/api'; move to environments
+  API_BASE = environment.API_BASE;
 
 
   constructor(private httpClient: HttpClient) {
