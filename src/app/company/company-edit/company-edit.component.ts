@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CompanyService } from '../company-service';
 
 @Component({
   selector: 'fbc-company-edit',
@@ -7,9 +10,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyEditComponent implements OnInit {
 
-  constructor() { }
+  companyID?: number;
+  isNewCompany!: boolean;
+
+  companyForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    phone: [''],
+    email: [''],
+  });
+
+  // form1 = new FormGroup({
+  //   name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+  //   email: new FormControl(),
+  //   phone: new FormControl();
+  // });
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private companyService: CompanyService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.companyID = this.activatedRoute.snapshot.params.id;
+    this.isNewCompany = !this.companyID;
+
+    if (!this.isNewCompany) {
+      this.getCompany();
+    }
   }
 
+  getCompany(): void {
+    this.companyService.getCompany(this.companyID!)
+      .subscribe(c => this.companyForm.patchValue(c));
+  }
+
+  get f() {
+    return this.companyForm.controls;
+  }
+
+  saveCompany(): void {
+    // const valie = this.companyForm.value
+    // const { value, valid } = this.companyForm;
+    const { value, valid } = this.companyForm;
+
+    if (valid) {
+      this.companyService
+        .addCompany(value)
+        .subscribe(() => this.router.navigate(['company/list']));
+    }
+  }
 }

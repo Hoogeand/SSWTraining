@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Company } from './company';
@@ -38,5 +38,18 @@ export class CompanyService {
   public delteCompany(companyiD: number): Observable<Company> {
     return this.httpClient.delete<Company>(`${this.API_BASE}/company/${companyiD}`)
       .pipe(catchError(error => this.errorHandler<Company>(error)));
+  }
+
+  public getCompany(companyId: number): Observable<Company> {
+    return this.httpClient.get<Company>(`${this.API_BASE}/company/${companyId}`);
+  }
+
+  public addCompany(company: Company): Observable<Company> {
+    return this.httpClient.post<Company>(`${this.API_BASE}/company`, company,
+      {
+        headers: new HttpHeaders().set('content-type', 'application/json')
+      }
+    ).pipe(catchError(error => this.errorHandler<Company>(error)));
+
   }
 }
