@@ -12,6 +12,8 @@ import { CompanyService } from '../company-service';
 export class CompanyListComponent implements OnInit {
   companies$: Observable<Company[]> | undefined;
   // companyService: CompanyService;
+  comanpyCount$!: Observable<number>
+
 
   constructor(private companyService: CompanyService) {
     // this.companyService = companyService;

@@ -10,6 +10,8 @@ import { tap, finalize } from 'rxjs/operators';
 })
 export class CompanyService {
   API_BASE = 'https://firebootcamp-crm-api.azurewebsites.net/api';
+
+
   constructor(private httpClient: HttpClient) { }
 
   public getCompanies(): Observable<Company[]> {
