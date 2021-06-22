@@ -1,0 +1,155 @@
+Productivity
+------------
+Component Model
+Template Syntaax
+TypeScript
+Ng Schematics
+  --- Install frameworks
+Angular CLI
+
+Complete framwork
+Routing
+Testing
+Internaalaziotn
+ANumation
+Accessibility
+Productivity tool
+
+------------------------
+Angular
+-- Template (HTML) -> Metedata (Decorators) -> Component (Class)
+  -- Property bings
+   -- Event binding
+   -- Directives (Pieces code injected into html)
+-- Services 
+  -- Depencandy injection
+
+Component tree
+--------------
+-- Start with one component and build components inside it.
+-- NgModel - Bind components together
+
+Angular 12
+----------
+NULLish => {{age !==null && age !== undefined ? age : calculateAge()}} => {{age ? calulateAge()}}
+Inline Sass
+ng buid -> prod
+Strict mode enabled by default.
+
+Demo
+----
+ng new fbc-crm-brisbane2021 --prefix fbc --style scss --dry-run
+Root folder contains config files
+code . (opens VS code)
+
+Angular.json (Project dependancies)
+------------
+Different enviroment configurations
+Strict
+Testing
+Prefix
+
+Package.json
+------------
+List of dependancies
+Dependancies & Dev dependancies
+
+Node_modules 
+------------
+Actual dependancies
+
+Source
+------
+assets -> static assets
+environments -> different env.
+
+app.components
+--------------
+
+app.compontnet.spec -> put tests
+
+html -> Can use pipe followed by column to specify parameters
+{{myDate | date : 'dd/MM/yyy'}}
+
+Hello world {{title}}
+<input type='text' [value]='title' (keyup) ='updateTitleFunction($event)/>
+<input type='text' ([ngModel])='title'/>
+
+ng generate component company/company-list --skip-tests
+ng generate interface company/company
+
+Generate interface and use instead of any
+
+Angular Essentials Extension.
+
+Wrap extension
+
+ng generate service company/company --skip-tests
+
+RxJS - reactive programing for java script --- TOOL RxJS marbles
+Async events
+API for async events
+Observable streams
+
+Observable []
+Need to subscribe before data is sent
+.map (x=>x+1) -- Observer and transform the data and is observable it self.
+.filter (x => x >2) -- Only allow values greater than 2
+.reduce ((x,y) => x + y) -- Needs two values beofre it produce a result.
+
+this.companies$= this.searchText.valueChanegs.pipe(  --pipe combine 
+debounceTime(500),   --Wait for  500ms before sending reqeust, slow it down
+distinctUntilChanged(), -- Only carry on if the value has changed
+switchMap(searchText => this.companyService.search(searchText)) --Change the observable from string to an array of companies
+);
+
+Observables vs promises.
+
+Observales varibales end with dollar signs $ convention
+Tap only side effect
+
+changeDetection: ChangeDetectionStrategy.OnPush  //Only repaint if the input paramters change. 
+Keep in mind that child component inherti this setting. Not worth the risk...
+
+routing
+  <router-outlet></router-outlet>
+canDeactiveate --- Can user navigate away
+canActivate -- Can user naviate to the route
+
+Recative forms
+--------------
+
+export class CompanyEditComponent implements OnInit {
+  form = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    phone: [''],
+    email: [''],
+  });
+
+OR
+  form1 = new FormGroup({
+    name: new FormControl('', [ Validators.required, Validators.minLength(3)]),
+    email: new FormControl(),
+    phone: new FormControl();
+  });
+
+Tool - ngNeat - form from interface -- github.com/ngneat/reactive-forms
+-- toool -ANgular dev tools - install Search - ANgular Devtools extension
+Syntactial sugar
+    // const value = this.companyForm.value
+// const valid = this.companyForm.valid    
+// const { value, valid } = this.companyForm;
+Spread operator
+---------------
+      const coompany = {
+        id: this.companyID,
+        name: value.name,
+        email: value.email,
+        phone: value.phone
+      } as Company;
+Use ... syntxx
+      const coompany = {
+        id: this.companyID,
+        ...value
+      } as Company;
+

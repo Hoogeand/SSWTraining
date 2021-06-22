@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Company } from '../company';
 import { CompanyService } from '../company-service';
 
 @Component({
@@ -55,9 +56,26 @@ export class CompanyEditComponent implements OnInit {
     // const { value, valid } = this.companyForm;
     const { value, valid } = this.companyForm;
 
-    if (valid) {
+    if (!valid) return;
+    if (this.isNewCompany) {
       this.companyService
         .addCompany(value)
+        .subscribe(() => this.router.navigate(['company/list']));
+    } else {
+      // const coompany = {
+      //   id: this.companyID,
+      //   name: value.name,
+      //   email: value.email,
+      //   phone: value.phone
+      // } as Company;
+
+      const coompany = {
+        id: this.companyID,
+        ...value
+      } as Company;
+
+
+      this.companyService.updateCompany(coompany)
         .subscribe(() => this.router.navigate(['company/list']));
     }
   }

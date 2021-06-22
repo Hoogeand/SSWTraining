@@ -52,4 +52,13 @@ export class CompanyService {
     ).pipe(catchError(error => this.errorHandler<Company>(error)));
 
   }
+
+  updateCompany(company: Company) {
+    return this.httpClient.put<Company>(`${this.API_BASE}/company/${company.id}`, company,
+      {
+        headers: new HttpHeaders().set('content-type', 'application/json')
+      }
+    ).pipe(catchError(error => this.errorHandler<Company>(error)));
+  }
+
 }
