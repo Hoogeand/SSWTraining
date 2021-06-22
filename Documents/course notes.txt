@@ -192,3 +192,19 @@ Testing
 -------
 Jasmine it the tool to describe the tests
 Karma is the tool which runs the tests (similar to ng serve)
+
+tool - nswagger, generate classes from rest full endpoints
+
+Cloud flare, index.html cache, prive no chache
+
+NGXS - state mangement
+----------------------
+ng add @ngxs/schematics
+app.module.ts
+    NgxsModule.forRoot([], {
+      developmentMode : !environment.production})
+  ],
+
+ng generate @ngxs/schematics:store --name company
+
+ngx -add logging to troublehsooting
